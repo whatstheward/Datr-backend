@@ -6,6 +6,14 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+
+Pronoun.destroy_all
+Gender.destroy_all
+Orientation.destroy_all
+Interest.destroy_all
+Relationship.destroy_all
+User.destroy_all
+
 Pronoun.create(name: 'he/him/his')
 Pronoun.create(name: 'she/her/hers')
 Pronoun.create(name: 'they/them/theirs')
@@ -52,3 +60,42 @@ Orientation.create(name:'Questioning')
 Orientation.create(name:'Asexual')
 Orientation.create(name:'Demisexual')
 Orientation.create(name:'Queer')
+
+Interest.create(name: "Active Life")
+Interest.create(name: "Arcades")
+Interest.create(name:"Art Galleries")
+Interest.create(name: "Arts & Entertainment")
+Interest.create(name:"Botanical Gardens")
+Interest.create(name:"Cinema")
+Interest.create(name:"Farms")
+Interest.create(name:"Festivals")
+Interest.create(name:"Haunted Houses")
+Interest.create(name:"Music Venues")
+Interest.create(name:"Paint & Sip")
+Interest.create(name:"Professional Sports Teams")
+Interest.create(name:"Performing Arts")
+Interest.create(name:"Wineries")
+Interest.create(name:"Supernatural Readings")
+Interest.create(name: "Beauty & Spas")
+Interest.create(name: "Day Spas")
+Interest.create(name: "Hot Springs")
+Interest.create(name: "Breweries")
+Interest.create(name: "Distilleries")
+Interest.create(name: "Bed & Breakfast")
+Interest.create(name: "Tours")
+Interest.create(name: "Public Art")
+Interest.create(name: "Bars")
+Interest.create(name: "Gay Bars")
+Interest.create(name: "Comedy Clubs")
+Interest.create(name: "Clubs")
+Interest.create(name: "Pool Halls")
+Interest.create(name: "Karaoke")
+Interest.create(name: "Coffee Shops")
+Interest.create(name: "Vinyl Records")
+Interest.create(name: "Food")
+Interest.create(name: "Local Flavor")
+Interest.create(name: "Nightlife")
+Interest.create(name: "Restaurants")
+Interest.create(name: "Shopping")
+
+10.times do User.create(username: Faker::Twitter.unique.screen_name, first_name: Faker::Name.unique.first_name, last_name: Faker::Name.unique.last_name, email: Faker::Internet.unique.email, age: Faker::Number.between(17, 50), zip_code: Faker::Number.number(5)) end

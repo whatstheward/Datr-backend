@@ -7,8 +7,8 @@ class User < ApplicationRecord
     has_many :pronouns, through: :user_pronouns
     has_many :user_orientations
     has_many :orientations, through: :user_orientations
+    has_many :user_interests
+    has_many :interests, through: :user_interests
     validates :username, :email, uniqueness: true
-
-    # build json render functions
 
 end
