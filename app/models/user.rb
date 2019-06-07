@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    has_secure_password
     has_many :relationships, dependent: :destroy
     has_many :partners, :through => :relationships
     has_many :user_genders
@@ -10,5 +11,4 @@ class User < ApplicationRecord
     has_many :user_interests
     has_many :interests, through: :user_interests
     validates :username, :email, uniqueness: true
-
 end

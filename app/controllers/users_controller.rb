@@ -6,13 +6,13 @@ class UsersController < ApplicationController
     end
 
     def show
-        @user = User.find(params[:id])
+        @user = User.find(params[:id].to_i)
     end
 
     def create 
         @user = User.new(username: params['username'], first_name: params['first_name'], 
         last_name: params['last_name'], email: params['email'], 
-        age: params['age'], image: params[:preview])
+        age: params['age'], image: params['image'], password: params['password'], zip_code: params['zip_code'])
         if params[:genders]
         params[:genders].each do 
             |gender| genderInfo = Gender.find(gender) 
@@ -37,19 +37,19 @@ class UsersController < ApplicationController
             @user.interests << interestInfo
             end
         end
-        if params[:partners]
-        params[:partners].each do 
-            |partner| partnerInfo = User.find(partner) 
-            @user.partners << partnerInfo
-            end
-        end
         if @user.save
+            if params[:partners]
+                params[:partners].each do 
+                    |partner| partnerInfo = User.find(partner) 
+                    @user.partners << partnerInfo
+                    end
+                end
         end
     end
 
     private 
 
     def user_params
-       permitted = params.permit(:username, :first_name, :last_name, :email, :image, :age, :zip_code, genders:[], orientations:[], pronouns:[])
+    params.permit(:username, :first_name, :last_name, :email, :image, :age, :password, :zip_code, genders:[], orientations:[], pronouns:[])
     end
 end

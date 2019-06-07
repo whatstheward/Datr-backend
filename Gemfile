@@ -22,7 +22,8 @@ gem 'dotenv-rails'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
-# Use fast json api for data serialization
+# user rest-client fro API requests
+gem 'rest-client'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

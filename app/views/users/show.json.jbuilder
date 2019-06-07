@@ -1,3 +1,4 @@
+json.id @user.id
 json.username @user.username
 json.age @user.age
 json.name @user.first_name.concat(" ",@user.last_name)
