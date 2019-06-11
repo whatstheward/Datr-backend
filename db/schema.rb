@@ -10,10 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_06_204038) do
+ActiveRecord::Schema.define(version: 2019_06_11_150631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "date_events", force: :cascade do |t|
+    t.bigint "user_date_id"
+    t.string "name"
+    t.string "location"
+    t.string "time"
+    t.string "street_address"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.string "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_date_id"], name: "index_date_events_on_user_date_id"
+  end
+
+  create_table "date_partners", force: :cascade do |t|
+    t.bigint "user_date_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_date_id"], name: "index_date_partners_on_user_date_id"
+    t.index ["user_id"], name: "index_date_partners_on_user_id"
+  end
 
   create_table "genders", force: :cascade do |t|
     t.string "name"
@@ -47,6 +71,15 @@ ActiveRecord::Schema.define(version: 2019_06_06_204038) do
     t.datetime "updated_at", null: false
     t.index ["partner_id"], name: "index_relationships_on_partner_id"
     t.index ["user_id"], name: "index_relationships_on_user_id"
+  end
+
+  create_table "user_dates", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "day"
+    t.string "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_dates_on_user_id"
   end
 
   create_table "user_genders", force: :cascade do |t|

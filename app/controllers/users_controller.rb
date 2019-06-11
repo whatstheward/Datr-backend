@@ -10,6 +10,7 @@ class UsersController < ApplicationController
     end
 
     def create 
+        byebug
         @user = User.new(username: params['username'], first_name: params['first_name'], 
         last_name: params['last_name'], email: params['email'], 
         age: params['age'], image: params['image'], password: params['password'], zip_code: params['zip_code'])
@@ -43,6 +44,8 @@ class UsersController < ApplicationController
                     |partner| partnerInfo = User.find(partner) 
                     @user.partners << partnerInfo
                     end
+                    token = JWT.encode({ user_id: @user.id }, ENV['HANDSHAKE'], 'HS256')
+                    render json: { token: token }, status: :ok
                 end
         end
     end

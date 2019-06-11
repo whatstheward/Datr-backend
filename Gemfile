@@ -23,7 +23,9 @@ gem 'dotenv-rails'
 # gem 'mini_magick', '~> 4.8'
 
 # user rest-client fro API requests
-gem 'rest-client'
+gem 'http'
+gem 'json'
+gem 'pry'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -15,6 +15,7 @@ json.pronouns @user.pronouns.each do |pronouns|
     json.name pronouns.name
 end
 json.partners @user.partners.each do |partner|
+    json.id partner.id
     json.name partner.first_name.concat(" ",partner.last_name)
 end
 json.interests @user.interests.each do |interest|

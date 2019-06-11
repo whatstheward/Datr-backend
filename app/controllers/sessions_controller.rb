@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
         if @user && @user.authenticate(params[:password])
         ## send back a token using JWT
         token = JWT.encode({ user_id: @user.id }, ENV['HANDSHAKE'], 'HS256')
-        render json: { token: token, user: @user.username }, status: :ok
+        render json: { token: token }, status: :ok
         else
         ## send back some angry json response
         render json: { errors: ["Incorrect email or password"] },
