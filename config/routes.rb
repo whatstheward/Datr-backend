@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :orientations, only: [:index]
   resources :pronouns, only: [:index]
   resources :interests, only: [:index]
-  resources :user_dates, only: [:index, :show, :create, :update, :destroy]
+  resources :user_dates, only: [:index, :show, :create, :update, :destroy], defaults: {format: :json}
   post '/login', to: 'sessions#create', as: 'login'
   post '/users', to: 'users#create', as: 'create'
 
