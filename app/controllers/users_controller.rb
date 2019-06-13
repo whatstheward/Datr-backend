@@ -10,7 +10,6 @@ class UsersController < ApplicationController
     end
 
     def create 
-        byebug
         @user = User.new(username: params['username'], first_name: params['first_name'], 
         last_name: params['last_name'], email: params['email'], 
         age: params['age'], image: params['image'], password: params['password'], zip_code: params['zip_code'])
@@ -27,26 +26,27 @@ class UsersController < ApplicationController
             end
         end
         if params[:pronouns]
-        params[:pronouns].each do 
-            |pronoun| pronounInfo = Pronoun.find(pronoun) 
+        params[:pronouns].each do |pronoun| 
+            pronounInfo = Pronoun.find(pronoun) 
             @user.pronouns << pronounInfo
             end
         end
         if params[:interests]
-        params[:interests].each do 
-            |interest| interestInfo = Interest.find(interest) 
+        params[:interests].each do |interest| 
+            interestInfo = Interest.find(interest) 
             @user.interests << interestInfo
             end
         end
         if @user.save
+            byebug
             if params[:partners]
-                params[:partners].each do 
-                    |partner| partnerInfo = User.find(partner) 
-                    @user.partners << partnerInfo
+                params[:partners].each do |partner| 
+                    partnerInfo = User.find(partner) 
+                    Relationship.create(user: @user, partner: partnerInfo, confirmed: 0)
                     end
-                    token = JWT.encode({ user_id: @user.id }, ENV['HANDSHAKE'], 'HS256')
-                    render json: { token: token }, status: :ok
                 end
+            token = JWT.encode({ user_id: @user.id }, ENV['HANDSHAKE'], 'HS256')
+            render json: { token: token }, status: :ok
         end
     end
 

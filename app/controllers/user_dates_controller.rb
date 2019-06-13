@@ -18,7 +18,7 @@ class UserDatesController < ApplicationController
                 end
             end
             if params[:datePlan][:partners]
-                params[:datePlan][:partners][0].each do |partner|
+                params[:datePlan][:partners].each do |partner|
                     @partner = User.find(partner[:id])
                     datePartner = DatePartner.new(user: @partner)
                     @user_date.date_partners << datePartner
@@ -33,12 +33,10 @@ class UserDatesController < ApplicationController
     def update
         @user_date = UserDate.find(params[:datePlan][:id])
         if params[:datePlan][:activities]
+            @user_date.date_events.destroy_all
             params[:datePlan][:activities].each do |activity|
-                oldDate = DateEvent.find(activity[:id])
-                oldDate.destroy
                 dateEvent = DateEvent.new(name: activity[:name], street_address: activity[:address], price: activity[:price], image_url: activity[:image_url])
                 @user_date.date_events << dateEvent
-                    byebug
                 end
             end
         end

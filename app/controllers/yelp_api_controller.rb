@@ -1,5 +1,6 @@
 class YelpApiController < ApplicationController
-
+    before_action :authorize!, only: [:search, :business_details]
+    
     def search
         @results = yelp_client.search(params[:query])
         render json: @results
