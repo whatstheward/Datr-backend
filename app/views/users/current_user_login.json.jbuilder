@@ -16,7 +16,6 @@ json.pronouns @user.pronouns.each do |pronouns|
     json.name pronouns.name
 end
 json.confirmedPartners @user.relationships.each do |relationship|
-
     if relationship.confirmed === 1
         @Partner = User.find(relationship.partner_id)
         json.id @Partner.id
@@ -28,7 +27,7 @@ json.pendingPartners @user.relationships.each do |relationship|
         @Partner = User.find(relationship.partner_id)
         json.relationshipID relationship.id
         json.partnerID @Partner.id 
-        json.name   @Partner.first_name+" "+@Partner.last_name
+        json.name @Partner.first_name+" "+@Partner.last_name
     end
 end
 json.interests @user.interests.each do |interest|

@@ -1,8 +1,13 @@
 
 class UsersController < ApplicationController
+    before_action :authorize!, only: [:show, :search]
 
     def index 
         @users = User.all
+    end
+
+    def current_user_login
+        @user = User.find(params[:id].to_i)
     end
 
     def show
@@ -38,7 +43,6 @@ class UsersController < ApplicationController
             end
         end
         if @user.save
-            byebug
             if params[:partners]
                 params[:partners].each do |partner| 
                     partnerInfo = User.find(partner) 
@@ -48,6 +52,10 @@ class UsersController < ApplicationController
             token = JWT.encode({ user_id: @user.id }, ENV['HANDSHAKE'], 'HS256')
             render json: { token: token }, status: :ok
         end
+    end
+
+    def search
+        @userResults = User.where('first_name LIKE ?', "#{params[:query].titleize}%")
     end
 
     private 

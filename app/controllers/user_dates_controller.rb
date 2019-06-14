@@ -3,7 +3,7 @@ class UserDatesController < ApplicationController
 
 
     def index
-        @user = User.find(current_user.id)
+        @user = User.find(params[:query])
         @user_dates = UserDate.where(user: @user)
     end
 
@@ -32,6 +32,9 @@ class UserDatesController < ApplicationController
 
     def update
         @user_date = UserDate.find(params[:datePlan][:id])
+        if params[:datePlan][:dateTime]
+        @user_date.update(time: params[:datePlan][:dateTime] )
+        end
         if params[:datePlan][:activities]
             @user_date.date_events.destroy_all
             params[:datePlan][:activities].each do |activity|
@@ -39,6 +42,15 @@ class UserDatesController < ApplicationController
                 @user_date.date_events << dateEvent
                 end
             end
+        if params[:datePlan][:partners]
+            @user_date.date_partners.destroy_all
+            params[:datePlan][:partners].each do |partner|
+                @partner = User.find(partner[:id])
+                datePartner = DatePartner.new(user: @partner)
+                @user_date.date_partners << datePartner
+                end
+            end
+        
         end
 
     def destroy
