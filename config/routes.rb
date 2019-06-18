@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :users,  only: [:index, :show, :create], defaults: {format: :json}
+  resources :users,  only: [:index, :show, :create, :destroy], defaults: {format: :json}
   resources :genders, only: [:index]
   resources :orientations, only: [:index]
   resources :pronouns, only: [:index]
   resources :interests, only: [:index], defaults: {format: :json}
-  resources :relationships, only: [:create, :update, :delete]
+  resources :relationships, only: [:create, :update, :delete], defaults: {format: :json}
   resources :user_dates, only: [:index, :show, :create, :update, :destroy], defaults: {format: :json}
   post '/login', to: 'sessions#create', as: 'login'
 

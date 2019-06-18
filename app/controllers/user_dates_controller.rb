@@ -1,10 +1,11 @@
 class UserDatesController < ApplicationController
-    before_action :authorize!, only: [:index, :show, :create, :update]
+    before_action :authorize!, only: [:index, :show, :create, :update, :destroy]
 
 
     def index
         @user = User.find(params[:query])
         @user_dates = UserDate.where(user: @user)
+
     end
 
     def create

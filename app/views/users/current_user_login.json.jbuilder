@@ -22,6 +22,7 @@ json.confirmedPartners @user.relationships.each do |relationship|
         json.name @Partner.first_name+" "+@Partner.last_name
     end
 end
+
 json.pendingPartners @user.relationships.each do |relationship|
     if relationship.confirmed === 0
         @Partner = User.find(relationship.partner_id)
@@ -29,6 +30,16 @@ json.pendingPartners @user.relationships.each do |relationship|
         json.partnerID @Partner.id 
         json.name @Partner.first_name+" "+@Partner.last_name
     end
+end
+
+@relationships = Relationship.where(partner_id: @user.id, confirmed: 0)
+
+json.requestedPartners @relationships.each do |relationship|
+    @requester = User.find(relationship.user_id)
+        json.relationshipID relationship.id 
+        json.requesterID @requester.id
+        json.name @requester.first_name+" "+@requester.last_name
+        json.image @requester.image
 end
 json.interests @user.interests.each do |interest|
     json.id interest.id

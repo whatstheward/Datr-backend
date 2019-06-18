@@ -1,6 +1,6 @@
 
 class UsersController < ApplicationController
-    before_action :authorize!, only: [:show, :search]
+    before_action :authorize!, only: [:show, :search, :destroy]
 
     def index 
         @users = User.all
@@ -51,11 +51,21 @@ class UsersController < ApplicationController
                 end
             token = JWT.encode({ user_id: @user.id }, ENV['HANDSHAKE'], 'HS256')
             render json: { token: token }, status: :ok
+        else
+            render json: {errors: @user.errors.full_messages}, status: :bad_request
         end
     end
 
     def search
         @userResults = User.where('first_name LIKE ?', "#{params[:query].titleize}%")
+    end
+
+    def destroy
+        @user = User.find(params[:id])
+        Relationship.where(partner: @user).destroy_all
+        Relationship.where(user: @user).destroy_all
+        @user.destroy
+        render json: ("Your profile has been deleted"), status: :ok
     end
 
     private 

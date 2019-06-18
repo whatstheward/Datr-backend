@@ -3,9 +3,8 @@ class Relationship < ApplicationRecord
     belongs_to :partner, :class_name => "User"
     has_many :date_partners
 
-
-    def create_inverse
-        self.class.create(user_id:self.partner.id, partner_id: self.user.id)
+    def create_inverse(confirmation)
+        self.class.create(user_id:self.partner.id, partner_id: self.user.id, confirmed: 1)
     end
 
     validates :confirmed, numericality: {only_integer: true, less_than: 5, greater_than: -1}
