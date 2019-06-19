@@ -5,29 +5,32 @@ class UserDatesController < ApplicationController
     def index
         @user = User.find(params[:query])
         @user_dates = UserDate.where(user: @user)
-
     end
 
     def create
         @user = User.find(current_user.id)
         @user_date = UserDate.new(user: @user, time: params[:datePlan][:dateTime])
         if @user_date.save
-            if params[:datePlan][:activities]
+            if params[:datePlan][:activities].length > 0
                 params[:datePlan][:activities].each do |activity|
                     dateEvent = DateEvent.new(name: activity[:name], street_address: activity[:location][:display_address].join(' '), price: activity[:price], image_url:activity[:image_url])
                     @user_date.date_events << dateEvent
                 end
+            else
+                return render json: {errors: ["You must select an activity"]}, status: :bad_request 
             end
-            if params[:datePlan][:partners]
+            if params[:datePlan][:partners].length > 0
                 params[:datePlan][:partners].each do |partner|
                     @partner = User.find(partner[:id])
                     datePartner = DatePartner.new(user: @partner)
                     @user_date.date_partners << datePartner
                 end
+            else
+            return render json: {errors: ["You must select a partner"]}, status: :bad_request
             end
             render json: @user_date, status: :ok
         else
-            render json: {errors: ['Uh-Oh! Date was not saved']}
+            render json: {errors: ["You must select a date from the calendar"]}
         end
     end
 
@@ -42,6 +45,8 @@ class UserDatesController < ApplicationController
                 dateEvent = DateEvent.new(name: activity[:name], street_address: activity[:address], price: activity[:price], image_url: activity[:image_url])
                 @user_date.date_events << dateEvent
                 end
+            else
+                return render json: {errors: ["You must select an activity"]}, status: :bad_request 
             end
         if params[:datePlan][:partners]
             @user_date.date_partners.destroy_all
@@ -50,8 +55,12 @@ class UserDatesController < ApplicationController
                 datePartner = DatePartner.new(user: @partner)
                 @user_date.date_partners << datePartner
                 end
+            else
+                return render json: {errors: ["You must select a partner"]}, status: :bad_request
             end
-        
+            @user = User.find(current_user.id)
+            @user_dates = UserDate.where(user: @user)
+            @user_dates
         end
 
     def destroy
