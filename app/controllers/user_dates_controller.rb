@@ -9,7 +9,7 @@ class UserDatesController < ApplicationController
 
     def create
         @user = User.find(current_user.id)
-        @user_date = UserDate.new(user: @user, time: params[:datePlan][:dateTime])
+        @user_date = UserDate.new(user: @user, time: params[:datePlan][:dateTime], rating: 0)
         if @user_date.save
             if params[:datePlan][:activities].length > 0
                 params[:datePlan][:activities].each do |activity|
