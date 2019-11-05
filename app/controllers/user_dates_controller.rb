@@ -58,6 +58,9 @@ class UserDatesController < ApplicationController
             else
                 return render json: {errors: ["You must select a partner"]}, status: :bad_request
             end
+        if params[:datePlan][:rating]
+            @user_date.rating = params[:datePlan][:rating]
+        end
             @user = User.find(current_user.id)
             @user_dates = UserDate.where(user: @user)
             @user_dates
