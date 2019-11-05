@@ -15,36 +15,38 @@ class UsersController < ApplicationController
     end
 
     def create 
-        @user = User.new(username: params['username'], first_name: params['first_name'], 
-        last_name: params['last_name'], email: params['email'], 
-        age: params['age'], image: params['image'], password: params['password'], zip_code: params['zip_code'])
-        if params[:genders]
-        params[:genders].each do 
-            |gender| genderInfo = Gender.find(gender) 
+        
+        @user = User.new(username: params['user']['username'], first_name: params['user']['first_name'], 
+        last_name: params['user']['last_name'], email: params['user']['email'], 
+        age: params['user']['age'], image: params['user']['image'], password: params['user']['password'], zip_code: params['user']['zip_code'])
+        if params['user'][:genders]
+            params[:user][:genders][:value].each do |gender| 
+            
+            genderInfo = Gender.find(gender) 
             @user.genders << genderInfo
             end
         end
-        if params[:orientations]
-        params[:orientations].each do 
+        if params['user'][:orientations]
+            params[:user][:orientations][:value].each do 
             |orientation| orientationInfo = Orientation.find(orientation) 
             @user.orientations << orientationInfo
             end
         end
-        if params[:pronouns]
-        params[:pronouns].each do |pronoun| 
+        if params['user'][:pronouns]
+        params['user'][:pronouns][:value].each do |pronoun| 
             pronounInfo = Pronoun.find(pronoun) 
             @user.pronouns << pronounInfo
             end
         end
-        if params[:interests]
-        params[:interests].each do |interest| 
+        if params['user'][:interests]
+        params['user'][:interests].each do |interest| 
             interestInfo = Interest.find(interest) 
             @user.interests << interestInfo
             end
         end
         if @user.save
-            if params[:partners]
-                params[:partners].each do |partner| 
+            if params['user'][:partners]
+                params['user'][:partners].each do |partner| 
                     partnerInfo = User.find(partner) 
                     Relationship.create(user: @user, partner: partnerInfo, confirmed: 0)
                     end

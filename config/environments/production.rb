@@ -82,4 +82,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # CORS allow origins from heroku
+  config.allowed_cors_origins = ['https://datr-atl.herokuapp.com']
 end
