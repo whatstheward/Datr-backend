@@ -1,6 +1,7 @@
 json.user_dates @user_dates.each do |date|
     json.id date.id
     json.time date.time
+    json.rating date.rating
     json.events date.date_events.each do |event|
         json.id event.id
         json.name event.name
@@ -13,5 +14,4 @@ json.user_dates @user_dates.each do |date|
         json.id user_partner.id
         json.name user_partner.first_name + " " + user_partner.last_name
     end
-    json.rating date.rating
 end
