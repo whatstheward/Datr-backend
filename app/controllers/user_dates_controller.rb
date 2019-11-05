@@ -64,7 +64,12 @@ class UserDatesController < ApplicationController
             @user = User.find(current_user.id)
             @user_dates = UserDate.where(user: @user)
             @user_dates
-        end
+    end
+
+    def update_rating
+        @user_date = UserDate.find(params[:datePlan][:id])
+        @user_date.update(rating: params[:datePlan][:rating])
+    end
 
     def destroy
         @user_date = UserDate.find(params[:id])
