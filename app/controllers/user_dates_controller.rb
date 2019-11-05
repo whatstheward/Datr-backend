@@ -69,6 +69,6 @@ class UserDatesController < ApplicationController
     def destroy
         @user_date = UserDate.find(params[:id])
         @user_date.destroy
-        render json: {'Access-Control-Allow-Origin' => 'localhost:3001'}
+        # render json: {'Access-Control-Allow-Origin' => 'localhost:3001'}
     end
 end

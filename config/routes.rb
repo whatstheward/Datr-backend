@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :relationships, only: [:create, :update, :delete], defaults: {format: :json}
   resources :user_dates, only: [:index, :show, :create, :update, :destroy], defaults: {format: :json}
   post '/login', to: 'sessions#create', as: 'login'
-
+  patch '/update_rating/:id', to: 'user_dates#update_rating', as: 'update_rating'
   get '/yelp_search', to: 'yelp_api#search', as: 'search'
   get '/yelp_business_details', to: 'yelp_api#business_details', as: 'business_details'
 
