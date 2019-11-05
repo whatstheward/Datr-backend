@@ -17,3 +17,4 @@ json.user_dates @user_dates.each do |date|
         json.rating rating
     end
 end
+end
